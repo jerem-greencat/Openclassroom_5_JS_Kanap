@@ -20,4 +20,8 @@ app.use(express.json());
 
 app.use('/api/products', productRoutes);
 
+// app.get('/', function (req, res) {
+//   res.render('index', {});
+// });
+
 module.exports = app;
