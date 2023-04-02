@@ -1,0 +1,1 @@
+// Ne pas stocker le prix dans le localstorage
