@@ -7,6 +7,10 @@ let productTitle = document.querySelector('#title');
 let priceProduct = document.querySelector('#price');
 let descProduct = document.querySelector('#description');
 let colorOptions = document.querySelector('#colors');
+let quantity = document.querySelector('#quantity');
+let addBtn = document.querySelector('#addToCart');
+
+let productWanted = [];
 
 console.log(str);
 console.log(idProduct);
@@ -21,21 +25,23 @@ fetch('http://localhost:3000/api/products')
     for (let i=0; i<canaps.length; i++) {
         if (canaps[i]._id === idProduct) {
 
+            productWanted.push(idProduct);
+            
             // Crée l'image du produit
             let newImg = document.createElement('img');
             newImg.src = canaps[i].imageUrl;
             newImg.alt = canaps[i].altTxt;
             imgProduct.appendChild(newImg);
-
+            
             // Crée le nom du produit
             productTitle.textContent = canaps[i].name;
-
+            
             // Crée le prix du produit
             priceProduct.textContent = canaps[i].price;
-
+            
             // Crée la description du produit
             descProduct.textContent = canaps[i].description;
-
+            
             // Crée les options de couleur
             for (let j=0; j<canaps[i].colors.length; j++) {
                 let newColor = document.createElement('option');
@@ -45,5 +51,21 @@ fetch('http://localhost:3000/api/products')
             }
         }
     }
-    
-})
+    addToCart();
+});
+
+function addToCart() {
+    addBtn.addEventListener('click', () => {
+        if (colorOptions.value == "") {
+            console.log('pas de couleur sélectionnée');
+        } else if (quantity.value == 0) {
+            console.log('pas de quantité sélectionnée');
+        } else {
+            productWanted.push(colorOptions.value);
+            productWanted.push(quantity.value);
+            console.log(productWanted);
+            localStorage.setItem("productAdded", productWanted);
+        }
+    })
+}
+
