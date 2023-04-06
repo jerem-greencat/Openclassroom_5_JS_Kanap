@@ -10,9 +10,6 @@ let colorOptions = document.querySelector('#colors');
 let quantity = document.querySelector('#quantity');
 let addBtn = document.querySelector('#addToCart');
 
-let productWanted = [];
-
-console.log(str);
 console.log(idProduct);
 
 fetch('http://localhost:3000/api/products')
@@ -24,8 +21,6 @@ fetch('http://localhost:3000/api/products')
     console.log(canaps);
     for (let i=0; i<canaps.length; i++) {
         if (canaps[i]._id === idProduct) {
-
-            productWanted.push(idProduct);
             
             // Crée l'image du produit
             let newImg = document.createElement('img');
@@ -56,15 +51,73 @@ fetch('http://localhost:3000/api/products')
 
 function addToCart() {
     addBtn.addEventListener('click', () => {
+        // Vérifie si tous les champs sont remplis
         if (colorOptions.value == "") {
             console.log('pas de couleur sélectionnée');
         } else if (quantity.value == 0) {
             console.log('pas de quantité sélectionnée');
         } else {
-            productWanted.push(colorOptions.value);
-            productWanted.push(quantity.value);
-            console.log(productWanted);
-            localStorage.setItem("productAdded", productWanted);
+            
+            // Crée l'obj json à stocker
+            let productJson = {
+                id: idProduct,
+                color: colorOptions.value,
+                quantity: quantity.value
+            }
+            
+            for (let i=0; i<localStorage.length; i++) {
+                // Vérifie si produit déja présent dans local storage
+                if (localStorage.key(i) == idProduct + "/" + colorOptions.value) {
+                    // Récupère valeurs du produit stocké
+                    let productJsonStr = localStorage.getItem(idProduct + "/" + colorOptions.value);
+                    // Change typage de l'objet stocké
+                    let productJsonInStorage = JSON.parse(productJsonStr);
+                    // Mets à jour quantité 
+                    productJson.quantity = Math.floor(productJsonInStorage.quantity) + Math.floor(quantity.value);
+                    productJson.quantity = JSON.stringify(productJson.quantity);
+                }
+            }
+            // Stocke cookie
+            let strJson = JSON.stringify(productJson);
+            localStorage.setItem(idProduct + "/" + colorOptions.value, strJson);
+            
+            
+            // // Ajoute les valeurs d'input dans array local
+            // productWanted.push(colorOptions.value);
+            // productWanted.push(quantity.value);
+            // console.log(productWanted);
+            
+            // // Boucle sur localstorage
+            // for (let i=0; i<localStorage.length; i++) {
+            //     // Vérifie si produit est présent
+            //     if (localStorage.key(i) == idProduct) {
+            //         console.log("produit déja présent");
+            //         isInCart = true;
+            
+            //         // Récupère valeurs du produit déja présent dans localsotrage
+            //         let itemInCart = localStorage.getItem(idProduct);
+            //         console.log(itemInCart);
+            
+            //         // Transforme obj en array
+            //         let splitObj = itemInCart.split(',');
+            //         console.log(splitObj);
+            
+            //         // Récupère position de la couleur dans l'array
+            //         let indexColor = splitObj.indexOf(colorOptions.value);
+            
+            //         // Ajoute la nouvelle quantité à la quantité présente dans l'array local
+            //         let str = splitObj[indexColor + 1];
+            //         let strToInt = Math.floor(str);
+            //         splitObj[indexColor + 1] = strToInt + Math.floor(quantity.value);
+            //         console.log(splitObj);
+            
+            //     }
+            // }
+            // // Ajoute produit dans localstorage si absent
+            // if (isInCart == false) {
+            //     localStorage.setItem(idProduct, productWanted);    
+            // }
+            
         }
     })
 }
