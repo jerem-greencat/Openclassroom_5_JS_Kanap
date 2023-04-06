@@ -79,45 +79,7 @@ function addToCart() {
             }
             // Stocke cookie
             let strJson = JSON.stringify(productJson);
-            localStorage.setItem(idProduct + "/" + colorOptions.value, strJson);
-            
-            
-            // // Ajoute les valeurs d'input dans array local
-            // productWanted.push(colorOptions.value);
-            // productWanted.push(quantity.value);
-            // console.log(productWanted);
-            
-            // // Boucle sur localstorage
-            // for (let i=0; i<localStorage.length; i++) {
-            //     // Vérifie si produit est présent
-            //     if (localStorage.key(i) == idProduct) {
-            //         console.log("produit déja présent");
-            //         isInCart = true;
-            
-            //         // Récupère valeurs du produit déja présent dans localsotrage
-            //         let itemInCart = localStorage.getItem(idProduct);
-            //         console.log(itemInCart);
-            
-            //         // Transforme obj en array
-            //         let splitObj = itemInCart.split(',');
-            //         console.log(splitObj);
-            
-            //         // Récupère position de la couleur dans l'array
-            //         let indexColor = splitObj.indexOf(colorOptions.value);
-            
-            //         // Ajoute la nouvelle quantité à la quantité présente dans l'array local
-            //         let str = splitObj[indexColor + 1];
-            //         let strToInt = Math.floor(str);
-            //         splitObj[indexColor + 1] = strToInt + Math.floor(quantity.value);
-            //         console.log(splitObj);
-            
-            //     }
-            // }
-            // // Ajoute produit dans localstorage si absent
-            // if (isInCart == false) {
-            //     localStorage.setItem(idProduct, productWanted);    
-            // }
-            
+            localStorage.setItem(idProduct + "/" + colorOptions.value, strJson);            
         }
     })
 }
