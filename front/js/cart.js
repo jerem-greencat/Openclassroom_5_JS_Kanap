@@ -1,5 +1,6 @@
 const cartList = document.getElementById('cart__items');
 const indicTotalQuantity = document.getElementById('totalQuantity');
+const indicTotalPrice = document.getElementById('totalPrice');
 let allProductsSelected = [];
 
 let productSrc;
@@ -9,6 +10,8 @@ let productCol;
 let productNb;
 let productPrice;
 let totalQuantity = 0;
+let priceCurrentProduct = 0;
+let totalPrice = 0;
 
 
 function checkProducts() {
@@ -99,6 +102,8 @@ function displayProducts() {
             let newPriceProduct = document.createElement('p');
             newPriceProduct.textContent = productPrice + " €";
             containerDesc[i].appendChild(newPriceProduct);
+            allProductsSelected[i].push(productPrice);
+            console.log(allProductsSelected);
             
             // Crée container settings
             let newContainerSettings = document.createElement('div');
@@ -125,8 +130,6 @@ function displayProducts() {
             newInputQuantity.max = "100";
             newInputQuantity.value = productNb;
             containerQuantity[i].appendChild(newInputQuantity);
-            const inputQuantity = Array.from(document.querySelectorAll('.itemQuantity'));
-            console.log(inputQuantity);
 
 
             // Crée container delete
@@ -143,6 +146,7 @@ function displayProducts() {
         }
 
         calculateQuantity();
+        calculatePrice();
     });
 }
 
@@ -157,7 +161,16 @@ function calculateQuantity() {
     indicTotalQuantity.textContent = totalQuantity;
 }
 
+function calculatePrice() {
+    const inputQuantity = Array.from(document.querySelectorAll('.itemQuantity'));
 
+    for (let i=0; i<inputQuantity.length; i++) {
+        priceCurrentProduct =  Math.floor(inputQuantity[i].value) * Math.floor(allProductsSelected[i][2]);
+        totalPrice = Math.floor(totalPrice) + Math.floor(priceCurrentProduct);
+    }
+    indicTotalPrice.textContent = totalPrice;
+    
+}
 
 
 window.addEventListener("DOMContentLoaded", (e) => {
