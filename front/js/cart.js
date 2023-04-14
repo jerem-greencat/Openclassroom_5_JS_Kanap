@@ -1,4 +1,5 @@
 const cartList = document.getElementById('cart__items');
+const indicTotalQuantity = document.getElementById('totalQuantity');
 let allProductsSelected = [];
 
 let productSrc;
@@ -7,6 +8,7 @@ let productName;
 let productCol;
 let productNb;
 let productPrice;
+let totalQuantity = 0;
 
 
 function checkProducts() {
@@ -123,6 +125,9 @@ function displayProducts() {
             newInputQuantity.max = "100";
             newInputQuantity.value = productNb;
             containerQuantity[i].appendChild(newInputQuantity);
+            const inputQuantity = Array.from(document.querySelectorAll('.itemQuantity'));
+            console.log(inputQuantity);
+
 
             // Crée container delete
             let newContainerDelete = document.createElement('div');
@@ -136,7 +141,20 @@ function displayProducts() {
             newDelete.textContent = "Supprimer";
             containerDelete[i].appendChild(newDelete);
         }
+
+        calculateQuantity();
     });
+}
+
+function calculateQuantity() {
+    const inputQuantity = Array.from(document.querySelectorAll('.itemQuantity'));
+    console.log(inputQuantity);
+    inputQuantity.forEach((item) => {
+        console.log(item.value);
+        totalQuantity = Math.floor(totalQuantity) + Math.floor(item.value);
+    })
+    console.log(totalQuantity);
+    indicTotalQuantity.textContent = totalQuantity;
 }
 
 
