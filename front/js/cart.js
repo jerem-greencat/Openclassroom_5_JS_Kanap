@@ -103,7 +103,6 @@ function displayProducts() {
             newPriceProduct.textContent = productPrice + " €";
             containerDesc[i].appendChild(newPriceProduct);
             allProductsSelected[i].push(productPrice);
-            console.log(allProductsSelected);
             
             // Crée container settings
             let newContainerSettings = document.createElement('div');
