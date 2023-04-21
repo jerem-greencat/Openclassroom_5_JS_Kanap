@@ -160,8 +160,8 @@ function displayProducts() {
                         allProductsSelected[i][1][1] = inputQuantity[i].value;
 
                         // Mets à jour local storage
-                        let idStorage = allProductsSelected[i][0];
-                        let colorStorage = allProductsSelected[i][1][0];
+                        let idStorage = item.closest('.cart__item').getAttribute('data-id');
+                        let colorStorage = item.closest('.cart__item').getAttribute('data-color');
                         let quantityStorage = allProductsSelected[i][1][1];
                         
                         let productJson = {
@@ -183,6 +183,7 @@ function displayProducts() {
         });
 
         // handle delete
+        
     });
 }
 
