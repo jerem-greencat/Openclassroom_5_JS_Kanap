@@ -171,8 +171,6 @@ function displayProducts() {
                         }
                         
                         if (localStorage.key(i) == idStorage + "/" + colorStorage) {
-                            console.log("trouvé cookie");
-
                             // Stocke cookie
                             let strJson = JSON.stringify(productJson);
                             localStorage.setItem(idStorage + "/" + colorStorage, strJson); 
@@ -183,13 +181,35 @@ function displayProducts() {
         });
 
         // handle delete
-        
+        const deleteBtn = Array.from(document.querySelectorAll('.deleteItem'));
+
+        deleteBtn.forEach((item) => {
+            item.addEventListener("click", (e) => {
+
+                for (let i=0; i<deleteBtn.length; i++) {
+                    if (deleteBtn[i] == item) {
+                        // Mets à jour local storage
+                        let idStorage = item.closest('.cart__item').getAttribute('data-id');
+                        let colorStorage = item.closest('.cart__item').getAttribute('data-color');
+                        
+                        localStorage.removeItem(idStorage + "/" + colorStorage);
+
+                        allProductsSelected.splice(i, 1);
+                    }
+                }
+
+                itemToDelete = item.closest('.cart__item');
+                itemToDelete.remove();
+                
+                calculateQuantity();
+                calculatePrice();
+            });
+        });
     });
 }
 
 function calculateQuantity() {
     const inputQuantity = Array.from(document.querySelectorAll('.itemQuantity'));
-    console.log(inputQuantity);
     totalQuantity = 0;
     inputQuantity.forEach((item) => {
         console.log(item.value);
@@ -212,7 +232,7 @@ function calculatePrice() {
 
 
 
-window.addEventListener("DOMContentLoaded", (e) => {
+window.addEventListener("DOMContentLoaded", () => {
     checkProducts();
     displayProducts();
 });
