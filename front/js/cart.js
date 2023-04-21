@@ -3,6 +3,23 @@ const indicTotalQuantity = document.getElementById('totalQuantity');
 const indicTotalPrice = document.getElementById('totalPrice');
 let allProductsSelected = [];
 
+const errorFirstName = document.getElementById('firstNameErrorMsg');
+const firstNameInput = document.getElementById('firstName');
+
+const errorLastName = document.getElementById('lastNameErrorMsg');
+const lastNameInput = document.getElementById('lastName');
+
+const errorAddress = document.getElementById('addressErrorMsg');
+const addressInput = document.getElementById('address');
+
+const cityError = document.getElementById('cityErrorMsg');
+const cityInput = document.getElementById('city');
+
+const emailError = document.getElementById('emailErrorMsg');
+const emailInput = document.getElementById('email');
+
+const orderBtn = document.getElementById('order');
+
 let productSrc;
 let productAlt;
 let productName;
@@ -230,9 +247,62 @@ function calculatePrice() {
     
 }
 
+// Gère Formulaire
+function handleOrder() {
+
+    const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    const nameRegex = /\b([A-ZÀ-ÿ][-,a-z. ']+[ ]*)+/;
+    const addressRegex = /(\d{1,}) [a-zA-Z0-9\s]+(\.)? [a-zA-Z]/;
+    const cityRegex = /^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/;
+
+    orderBtn.addEventListener("click", (e) => {
+        if (firstNameInput.value == "") {
+            errorFirstName.textContent = "Veuillez indiquer votre prénom";
+        } else if (nameRegex.test(firstNameInput.value) == false) {
+            errorFirstName.textContent = "Il semble y avoir une erreur dans votre prénom";
+        } else {
+            errorFirstName.textContent = "";
+        }
+
+        if (lastNameInput.value == "") {
+            errorLastName.textContent = "Veuillez indiquer votre nom";
+        } else if (nameRegex.test(lastNameInput.value) == false) {
+            errorLastName.textContent = "Il semble y avoir une erreur dans votre nom";
+        } else {
+            errorLastName.textContent = "";
+        }
+
+        if (addressInput.value == "") {
+            errorAddress.textContent = "Veuillez indiquer votre adresse";
+        } else if (addressRegex.test(addressInput.value) == false) {
+            errorAddress.textContent = "Il semble y avoir une erreur dans votre adresse";
+        } else {
+            errorAddress.textContent = "";
+        }
+
+        if (cityInput.value == "") {
+            cityError.textContent = "Veuillez indiquer votre ville";
+        } else if (cityRegex.test(cityInput.value) == false) {
+            cityError.textContent = "Il semble y avoir une erreur dans votre ville";
+        } else {
+            cityError.textContent = "";
+        }
+
+        if (emailInput.value == "") {
+            emailError.textContent = "Veuillez indiquer votre email";
+        } else if (emailRegex.test(emailInput.value) == false) {
+            emailError.textContent = "Il semble y avoir une erreur dans votre email";
+        } else {
+            emailError.textContent = "";
+        }
+    });
+}
+
+
 
 
 window.addEventListener("DOMContentLoaded", () => {
     checkProducts();
     displayProducts();
+    handleOrder();
 });
