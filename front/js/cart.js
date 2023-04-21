@@ -94,11 +94,11 @@ function displayProducts() {
             let newNameProduct = document.createElement('h2');
             newNameProduct.textContent = productName;
             containerDesc[i].appendChild(newNameProduct);
-
+            
             let newColorProduct = document.createElement('p');
             newColorProduct.textContent = productCol;
             containerDesc[i].appendChild(newColorProduct);
-
+            
             let newPriceProduct = document.createElement('p');
             newPriceProduct.textContent = productPrice + " €";
             containerDesc[i].appendChild(newPriceProduct);
@@ -109,18 +109,18 @@ function displayProducts() {
             newContainerSettings.classList.add('cart__item__content__settings');
             containerContent[i].appendChild(newContainerSettings);
             const containerSettings = Array.from(document.querySelectorAll('.cart__item__content__settings'));
-
+            
             // Crée container quantité
             let newContainerQuantity = document.createElement('div');
             newContainerQuantity.classList.add('cart__item__content__settings__quantity');
             containerSettings[i].appendChild(newContainerQuantity);
             const containerQuantity = Array.from(document.querySelectorAll('.cart__item__content__settings__quantity'));
-
+            
             // Crée content quantity
             let newQuantityContent = document.createElement('p');
-            newQuantityContent.textContent = "Qté : " + productNb;
+            newQuantityContent.textContent = "Quantité : ";
             containerQuantity[i].appendChild(newQuantityContent);
-
+            
             let newInputQuantity = document.createElement('input');
             newInputQuantity.type = "number";
             newInputQuantity.classList.add('itemQuantity');
@@ -129,29 +129,67 @@ function displayProducts() {
             newInputQuantity.max = "100";
             newInputQuantity.value = productNb;
             containerQuantity[i].appendChild(newInputQuantity);
-
-
+            
+            
             // Crée container delete
             let newContainerDelete = document.createElement('div');
             newContainerDelete.classList.add('cart__item__content__settings__delete');
             containerSettings[i].appendChild(newContainerDelete);
             const containerDelete = Array.from(document.querySelectorAll('.cart__item__content__settings__delete'));
-        
+            
             // Crée delete
             let newDelete = document.createElement('p');
             newDelete.classList.add('deleteItem');
             newDelete.textContent = "Supprimer";
             containerDelete[i].appendChild(newDelete);
         }
-
+        
         calculateQuantity();
         calculatePrice();
+        
+        // handle quantity
+        const inputQuantity = Array.from(document.querySelectorAll('.itemQuantity'));
+        
+        inputQuantity.forEach((item) => {
+            item.addEventListener("change", (e) => {
+                calculateQuantity();
+                calculatePrice();
+                
+                for (let i=0; i<inputQuantity.length; i++) {
+                    if (inputQuantity[i] == item) {
+                        allProductsSelected[i][1][1] = inputQuantity[i].value;
+
+                        // Mets à jour local storage
+                        let idStorage = allProductsSelected[i][0];
+                        let colorStorage = allProductsSelected[i][1][0];
+                        let quantityStorage = allProductsSelected[i][1][1];
+                        
+                        let productJson = {
+                            id : idStorage,
+                            color : colorStorage,
+                            quantity : quantityStorage
+                        }
+                        
+                        if (localStorage.key(i) == idStorage + "/" + colorStorage) {
+                            console.log("trouvé cookie");
+
+                            // Stocke cookie
+                            let strJson = JSON.stringify(productJson);
+                            localStorage.setItem(idStorage + "/" + colorStorage, strJson); 
+                        }
+                    }
+                }
+            });
+        });
+
+        // handle delete
     });
 }
 
 function calculateQuantity() {
     const inputQuantity = Array.from(document.querySelectorAll('.itemQuantity'));
     console.log(inputQuantity);
+    totalQuantity = 0;
     inputQuantity.forEach((item) => {
         console.log(item.value);
         totalQuantity = Math.floor(totalQuantity) + Math.floor(item.value);
@@ -162,7 +200,7 @@ function calculateQuantity() {
 
 function calculatePrice() {
     const inputQuantity = Array.from(document.querySelectorAll('.itemQuantity'));
-
+    totalPrice = 0;
     for (let i=0; i<inputQuantity.length; i++) {
         priceCurrentProduct =  Math.floor(inputQuantity[i].value) * Math.floor(allProductsSelected[i][2]);
         totalPrice = Math.floor(totalPrice) + Math.floor(priceCurrentProduct);
@@ -170,6 +208,7 @@ function calculatePrice() {
     indicTotalPrice.textContent = totalPrice;
     
 }
+
 
 
 window.addEventListener("DOMContentLoaded", (e) => {
