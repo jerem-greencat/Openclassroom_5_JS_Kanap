@@ -8,7 +8,6 @@ fetch('http://localhost:3000/api/products')
 })
 .then((data) => {
     let canaps = data;
-    console.log(canaps);
 
     for (let i=0; i<canaps.length; i++) {
 
@@ -42,4 +41,4 @@ fetch('http://localhost:3000/api/products')
         newDesc.textContent = canaps[i].description;
         lastArticle.appendChild(newDesc);
     }
-})
+});

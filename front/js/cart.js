@@ -50,7 +50,6 @@ function checkProducts() {
         productCheck.push(productColorCheck);
         allProductsSelected.push(productCheck);
     }
-    console.log(allProductsSelected);
 }
 
 function displayProducts() {
@@ -60,7 +59,6 @@ function displayProducts() {
     })
     .then((data) => {
         let canaps = data;
-        console.log(canaps);
         
         for (let i=0; i<allProductsSelected.length; i++) {
             // Crée fiche article
@@ -229,10 +227,8 @@ function calculateQuantity() {
     const inputQuantity = Array.from(document.querySelectorAll('.itemQuantity'));
     totalQuantity = 0;
     inputQuantity.forEach((item) => {
-        console.log(item.value);
         totalQuantity = Math.floor(totalQuantity) + Math.floor(item.value);
     })
-    console.log(totalQuantity);
     indicTotalQuantity.textContent = totalQuantity;
 }
 
@@ -325,7 +321,6 @@ async function submitOrder() {
     
     
     let productsArray = allProductsSelected.map(p => p[0]);
-    console.log(productsArray);
     let data = {
         contact : contact,
         products : productsArray
@@ -341,8 +336,6 @@ async function submitOrder() {
         body: JSON.stringify(data)
     });
     let result = await response.json();
-
-    console.log(result);
 
     window.location.href = "./confirmation.html?orderId=" + result.orderId; 
 } 

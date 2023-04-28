@@ -18,7 +18,6 @@ fetch('http://localhost:3000/api/products')
 })
 .then((data) => {
     let canaps = data;
-    console.log(canaps);
     for (let i=0; i<canaps.length; i++) {
         if (canaps[i]._id === idProduct) {
             
@@ -81,6 +80,6 @@ function addToCart() {
             let strJson = JSON.stringify(productJson);
             localStorage.setItem(idProduct + "/" + colorOptions.value, strJson);            
         }
-    })
+    });
 }
 
