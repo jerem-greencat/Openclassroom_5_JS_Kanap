@@ -53,9 +53,9 @@ function addToCart() {
     addBtn.addEventListener('click', () => {
         // Vérifie si tous les champs sont remplis
         if (colorOptions.value == "") {
-            console.log('pas de couleur sélectionnée');
+            alert("Veuillez sélectionner une couleur");
         } else if (quantity.value == 0) {
-            console.log('pas de quantité sélectionnée');
+            alert("Veuillez sélectionner une quantité");
         } else {
             
             // Crée l'obj json à stocker
