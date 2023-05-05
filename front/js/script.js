@@ -45,5 +45,7 @@ fetch('http://localhost:3000/api/products')
 
 
 // Vérif Panier vide lors d'order
-// Vérif regex majuscule non obligatoire 
 //Vérif nb décimaux dans page produit
+
+
+// Vérif regex majuscule non obligatoire 

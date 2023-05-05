@@ -30,6 +30,8 @@ let totalQuantity = 0;
 let priceCurrentProduct = 0;
 let totalPrice = 0;
 
+let allInt = true;
+
 
 function checkProducts() {
     
@@ -222,6 +224,17 @@ function displayProducts() {
     });
 }
 
+function checkInt() {
+    const inputQuantity = Array.from(document.querySelectorAll('.itemQuantity'));
+    allInt = true;
+    for (let i=0; i<inputQuantity.length; i++) {
+        if(inputQuantity[i].value.indexOf(".") != -1 || inputQuantity[i].value.indexOf(",") != -1) {
+
+            allInt = false;
+        }
+    }
+}
+
 function calculateQuantity() {
     const inputQuantity = Array.from(document.querySelectorAll('.itemQuantity'));
     totalQuantity = 0;
@@ -302,14 +315,17 @@ function handleOrder() {
             emailError.textContent = "";
             emailIsOk = true;
         }
-
         
+        checkInt();
+        console.log(allInt);
         
-        if (firstNameIsOk && lastNameIsOk && addressIsOk && cityIsOk && emailIsOk && totalQuantity != 0) {
+        if (firstNameIsOk && lastNameIsOk && addressIsOk && cityIsOk && emailIsOk && totalQuantity != 0 && allInt == true) {
             submitOrder();
         } else if (totalQuantity == 0) {
             alert("Vous devez avoir des produits dans votre panier");
             console.log(allProductsSelected);
+        } else if (allInt == false) {
+            alert("Veuillez entrer une quantité valide");
         }
     });
 }
@@ -333,15 +349,15 @@ async function submitOrder() {
     
     
     let response = await fetch('http://localhost:3000/api/products/order', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    });
-    let result = await response.json();
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+});
+let result = await response.json();
 
-    window.location.href = "./confirmation.html?orderId=" + result.orderId; 
+window.location.href = "./confirmation.html?orderId=" + result.orderId; 
 } 
 
 

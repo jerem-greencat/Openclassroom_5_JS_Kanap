@@ -43,6 +43,8 @@ fetch('http://localhost:3000/api/products')
                 newColor.textContent = canaps[i].colors[j];
                 colorOptions.appendChild(newColor);
             }
+
+            quantity.setAttribute("step", "1");
         }
     }
     addToCart();
@@ -55,6 +57,8 @@ function addToCart() {
             alert("Veuillez sélectionner une couleur");
         } else if (quantity.value == 0) {
             alert("Veuillez sélectionner une quantité");
+        }else if(quantity.value.indexOf(".") != -1 || quantity.value.indexOf(",") != -1) {
+            alert("Veuillez entrer une quantité valide");
         } else {
             
             // Crée l'obj json à stocker
