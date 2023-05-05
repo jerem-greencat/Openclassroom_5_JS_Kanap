@@ -302,9 +302,14 @@ function handleOrder() {
             emailError.textContent = "";
             emailIsOk = true;
         }
+
         
-        if (firstNameIsOk && lastNameIsOk && addressIsOk && cityIsOk && emailIsOk) {
+        
+        if (firstNameIsOk && lastNameIsOk && addressIsOk && cityIsOk && emailIsOk && totalQuantity != 0) {
             submitOrder();
+        } else if (totalQuantity == 0) {
+            alert("Vous devez avoir des produits dans votre panier");
+            console.log(allProductsSelected);
         }
     });
 }
