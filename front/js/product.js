@@ -82,7 +82,8 @@ function addToCart() {
             }
             // Stocke cookie
             let strJson = JSON.stringify(productJson);
-            localStorage.setItem(idProduct + "/" + colorOptions.value, strJson);            
+            localStorage.setItem(idProduct + "/" + colorOptions.value, strJson);  
+            alert("Votre produit a bien été ajouté au panier");        
         }
     });
 }
