@@ -42,3 +42,8 @@ fetch('http://localhost:3000/api/products')
         lastArticle.appendChild(newDesc);
     }
 });
+
+
+// Vérif Panier vide lors d'order
+// Vérif regex majuscule non obligatoire 
+//Vérif nb décimaux dans page produit

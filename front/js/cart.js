@@ -200,7 +200,6 @@ function displayProducts() {
         
         deleteBtn.forEach((item) => {
             item.addEventListener("click", (e) => {
-                
                 for (let i=0; i<deleteBtn.length; i++) {
                     if (deleteBtn[i] == item) {
                         // Mets à jour local storage
