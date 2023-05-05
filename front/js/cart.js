@@ -259,7 +259,7 @@ function calculatePrice() {
 function handleOrder() {
     
     const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-    const nameRegex = /\b([A-ZÀ-ÿ][-,a-z. ']+[ ]*)+/;
+    const nameRegex = /\b([a-za-ÿ][-,a-z. ']+[ ]*)+/;
     const addressRegex = /(\d{1,}) [a-zA-Z0-9\s]+(\.)? [a-zA-Z]/;
     const cityRegex = /^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/;
     
@@ -277,6 +277,8 @@ function handleOrder() {
             errorFirstName.textContent = "Il semble y avoir une erreur dans votre prénom";
         } else {
             errorFirstName.textContent = "";
+            
+            console.log('ok prenom');
             firstNameIsOk = true;
         }
         
