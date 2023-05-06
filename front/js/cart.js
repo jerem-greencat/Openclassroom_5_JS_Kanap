@@ -258,8 +258,8 @@ function calculatePrice() {
 // Gère Formulaire
 function handleOrder() {
     
-    const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-    const nameRegex = /\b([a-za-ÿ][-,a-z. ']+[ ]*)+/;
+    const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,6}$/;
+    const nameRegex =  /^[a-zA-ZÀ-ÿ]{2,35}([-' ,][a-zA-ZÀ-ÿ]+)*$/i;
     const addressRegex = /(\d{1,}) [a-zA-Z0-9\s]+(\.)? [a-zA-Z]/;
     const cityRegex = /^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/;
     
